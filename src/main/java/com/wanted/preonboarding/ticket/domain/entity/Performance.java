@@ -10,17 +10,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Table
+@Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Performance {
 	@Id
 	@GeneratedValue(generator = "uuid2")
@@ -40,4 +38,14 @@ public class Performance {
 	@Column(nullable = false, name = "is_reserve", columnDefinition = "varchar default 'disable'")
 	private String isReserve;
 
+	@Builder
+	public Performance(UUID id, String name, int price, int round, int type, Date start_date, String isReserve) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.round = round;
+		this.type = type;
+		this.start_date = start_date;
+		this.isReserve = isReserve;
+	}
 }

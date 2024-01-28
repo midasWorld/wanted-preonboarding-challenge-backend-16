@@ -10,17 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Table
+@Entity
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +34,17 @@ public class Reservation {
 	private int gate;
 	private char line;
 	private int seat;
+
+	@Builder
+	public Reservation(UUID performanceId, String name, String phoneNumber, int round, int gate, char line, int seat) {
+		this.performanceId = performanceId;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.round = round;
+		this.gate = gate;
+		this.line = line;
+		this.seat = seat;
+	}
 
 	public static Reservation of(ReserveInfo info) {
 		return Reservation.builder()
