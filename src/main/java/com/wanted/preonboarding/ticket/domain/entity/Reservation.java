@@ -2,8 +2,6 @@ package com.wanted.preonboarding.ticket.domain.entity;
 
 import java.util.UUID;
 
-import com.wanted.preonboarding.ticket.domain.dto.ReserveInfo;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,17 +43,4 @@ public class Reservation {
 		this.line = line;
 		this.seat = seat;
 	}
-
-	public static Reservation of(ReserveInfo info) {
-		return Reservation.builder()
-			.performanceId(info.getPerformanceId())
-			.name(info.getReservationName())
-			.phoneNumber(info.getReservationPhoneNumber())
-			.round(info.getRound())
-			.gate(1)
-			.line(info.getLine())
-			.seat(info.getSeat())
-			.build();
-	}
-
 }
