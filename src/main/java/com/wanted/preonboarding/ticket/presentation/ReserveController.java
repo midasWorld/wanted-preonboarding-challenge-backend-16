@@ -2,6 +2,7 @@ package com.wanted.preonboarding.ticket.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wanted.preonboarding.core.domain.response.ResponseHandler;
 import com.wanted.preonboarding.ticket.application.TicketSeller;
 import com.wanted.preonboarding.ticket.application.request.ReservationCancelNoticeRequest;
+import com.wanted.preonboarding.ticket.application.request.ReservationCancelRequest;
 import com.wanted.preonboarding.ticket.application.request.ReserveRequest;
 import com.wanted.preonboarding.ticket.application.response.ReserveResponse;
 
@@ -38,6 +40,19 @@ public class ReserveController {
 	@PostMapping("/cancel/notice")
 	public ResponseEntity subscribeToCancelNotice(@RequestBody ReservationCancelNoticeRequest request) {
 		ticketSeller.subscribeToCancelNotice(request);
+
+		return ResponseEntity.ok()
+			.body(ResponseHandler.<Boolean>builder()
+				.message("Success")
+				.statusCode(HttpStatus.OK)
+				.data(true)
+				.build()
+			);
+	}
+
+	@DeleteMapping("/cancel")
+	public ResponseEntity cancelReservation(@RequestBody ReservationCancelRequest request) {
+		ticketSeller.cancelReservation(request);
 
 		return ResponseEntity.ok()
 			.body(ResponseHandler.<Boolean>builder()

@@ -1,5 +1,6 @@
 package com.wanted.preonboarding.ticket.application;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.wanted.preonboarding.core.exception.BusinessException;
 import com.wanted.preonboarding.core.exception.ErrorCode;
 import com.wanted.preonboarding.ticket.application.request.FindReservationRequest;
 import com.wanted.preonboarding.ticket.application.request.ReservationCancelNoticeRequest;
+import com.wanted.preonboarding.ticket.application.request.ReservationCancelRequest;
 import com.wanted.preonboarding.ticket.application.request.ReserveRequest;
 import com.wanted.preonboarding.ticket.application.response.PerformanceResponse;
 import com.wanted.preonboarding.ticket.application.response.ReserveResponse;
@@ -73,5 +75,24 @@ public class TicketSeller {
 		});
 
 		reservationCancelNoticeRepository.save(request.toEntity());
+	}
+
+	@Transactional
+	public void cancelReservation(ReservationCancelRequest request) {
+		Performance performance = performanceRepository.findById(request.getPerformanceId())
+			.orElseThrow(() -> new BusinessException(ErrorCode.PERFORMANCE_NOT_FOUND, request.getPerformanceId()));
+
+		LocalDate performanceStartDate = performance.getStartDate().toLocalDate();
+		if (!LocalDate.now().isBefore(performanceStartDate)) {
+			throw new BusinessException(ErrorCode.RESERVATION_CANNOT_CANCEL_AFTER_TODAY);
+		}
+
+		Reservation reservation = reservationRepository.findByPerformanceIdAndNameAndPhoneNumber(
+			request.getPerformanceId(),
+			request.getReservationName(),
+			request.getReservationPhoneNumber()
+		).orElseThrow(() -> new BusinessException(ErrorCode.RESERVATION_NOT_FOUND));
+
+		reservationRepository.delete(reservation);
 	}
 }

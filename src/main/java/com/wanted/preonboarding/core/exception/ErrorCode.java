@@ -10,7 +10,9 @@ public enum ErrorCode {
 	PERFORMANCE_NOT_BOOKABLE(HttpStatus.BAD_REQUEST, "해당 공연은 예매가 불가능합니다."),
 	BALANCE_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "사용 가능한 잔액이 부족합니다. 잔액을 확인하고 다시 시도해주세요."),
 
-	RESERVATION_CANCEL_NOTICE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "해당 번호로 예약 가능 알림이 이미 등록되었습니다.")
+	RESERVATION_CANCEL_NOTICE_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "해당 번호로 예약 가능 알림이 이미 등록되었습니다."),
+	RESERVATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당 예약은 존재하지 않습니다."),
+	RESERVATION_CANNOT_CANCEL_AFTER_TODAY(HttpStatus.BAD_REQUEST, "공연 당일 이후에는 취소가 불가능 합니다."),
 	;
 
 	private HttpStatus httpStatus;
