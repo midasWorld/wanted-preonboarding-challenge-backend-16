@@ -1,4 +1,4 @@
-package com.wanted.preonboarding.ticket.application.event;
+package com.wanted.preonboarding.ticket.application.event.handler;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import com.wanted.preonboarding.ticket.application.event.ReservationCancelledEvent;
 import com.wanted.preonboarding.ticket.domain.entity.ReservationCancelNotice;
 import com.wanted.preonboarding.ticket.infrastructure.repository.ReservationCancelNoticeRepository;
 
