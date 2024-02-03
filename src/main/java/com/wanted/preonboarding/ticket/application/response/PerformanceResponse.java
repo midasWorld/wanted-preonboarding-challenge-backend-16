@@ -1,6 +1,6 @@
 package com.wanted.preonboarding.ticket.application.response;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.wanted.preonboarding.ticket.domain.entity.Performance;
@@ -14,7 +14,7 @@ public class PerformanceResponse {
 	private UUID performanceId;
 	private String performanceName;
 	private String performanceType;
-	private Date startDate;
+	private LocalDateTime startDate;
 	private String isReserve;
 
 	public static PerformanceResponse of(Performance entity) {

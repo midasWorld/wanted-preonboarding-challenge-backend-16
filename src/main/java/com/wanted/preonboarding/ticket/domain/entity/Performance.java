@@ -1,6 +1,6 @@
 package com.wanted.preonboarding.ticket.domain.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -46,14 +46,14 @@ public class Performance {
 	private PerformanceType type;
 
 	@Column(name = "start_date", nullable = false)
-	private Date startDate;
+	private LocalDateTime startDate;
 
 	@Convert(converter = ReserveStatusConverter.class)
 	@Column(nullable = false, name = "is_reserve", columnDefinition = "varchar default 'disable'")
 	private ReserveState isReserve;
 
 	@Builder
-	public Performance(UUID id, String name, int price, int round, PerformanceType type, Date startDate, ReserveState isReserve) {
+	public Performance(UUID id, String name, int price, int round, PerformanceType type, LocalDateTime startDate, ReserveState isReserve) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
