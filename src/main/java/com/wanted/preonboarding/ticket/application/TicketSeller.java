@@ -3,11 +3,13 @@ package com.wanted.preonboarding.ticket.application;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wanted.preonboarding.core.exception.BusinessException;
 import com.wanted.preonboarding.core.exception.ErrorCode;
+import com.wanted.preonboarding.ticket.application.event.ReservationCancelledEvent;
 import com.wanted.preonboarding.ticket.application.request.FindReservationRequest;
 import com.wanted.preonboarding.ticket.application.request.ReservationCancelNoticeRequest;
 import com.wanted.preonboarding.ticket.application.request.ReservationCancelRequest;
@@ -30,6 +32,8 @@ public class TicketSeller {
 	private final PerformanceRepository performanceRepository;
 	private final ReservationRepository reservationRepository;
 	private final ReservationCancelNoticeRepository reservationCancelNoticeRepository;
+
+	private final ApplicationEventPublisher eventPublisher;
 
 	public List<PerformanceResponse> getAllPerformances() {
 		return performanceRepository.findAllByIsReserve(ReserveState.ENABLE)
@@ -94,5 +98,11 @@ public class TicketSeller {
 		).orElseThrow(() -> new BusinessException(ErrorCode.RESERVATION_NOT_FOUND));
 
 		reservationRepository.delete(reservation);
+
+		eventPublisher.publishEvent(ReservationCancelledEvent.builder()
+				.performanceId(performance.getId())
+				.performanceName(performance.getName())
+				.build()
+		);
 	}
 }
