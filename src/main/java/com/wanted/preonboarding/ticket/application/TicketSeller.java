@@ -40,7 +40,7 @@ public class TicketSeller {
 		Performance performance = performanceRepository.findById(request.getPerformanceId())
 			.orElseThrow(() -> new BusinessException(ErrorCode.PERFORMANCE_NOT_FOUND, request.getPerformanceId()));
 
-		if (performance.getIsReserve() == ReserveState.ENABLE) {
+		if (performance.getIsReserve() == ReserveState.DISABLE) {
 			throw new BusinessException(ErrorCode.PERFORMANCE_NOT_BOOKABLE);
 		}
 
