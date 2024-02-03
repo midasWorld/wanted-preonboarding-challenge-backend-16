@@ -61,6 +61,7 @@ public class GlobalExceptionHandler {
 			.body(ResponseHandler.builder()
 				.message(e.getMessage())
 				.statusCode(status)
+				.build()
 			);
 	}
 }
