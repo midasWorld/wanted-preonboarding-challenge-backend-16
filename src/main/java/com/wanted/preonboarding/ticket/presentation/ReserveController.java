@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ReserveController {
 	private final TicketSeller ticketSeller;
 
-	@PostMapping("")
+	@PostMapping
 	public ResponseEntity reservation(@RequestBody ReserveRequest request) {
 
 		ReserveResponse reservation = ticketSeller.reserve(request);

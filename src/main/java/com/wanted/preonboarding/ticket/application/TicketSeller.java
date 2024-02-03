@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wanted.preonboarding.ticket.application.request.FindReservationRequest;
 import com.wanted.preonboarding.ticket.application.request.ReserveRequest;
 import com.wanted.preonboarding.ticket.application.response.ReserveResponse;
 import com.wanted.preonboarding.ticket.domain.dto.PerformanceInfo;
@@ -52,5 +53,11 @@ public class TicketSeller {
 		Reservation reservation = reservationRepository.save(request.toEntity());
 
 		return ReserveResponse.of(reservation);
+	}
+
+	public List<ReserveResponse> getReservations(FindReservationRequest request) {
+		return reservationRepository.findAllByNameAndPhoneNumber(request.getName(), request.getPhoneNumber())
+			.stream().map(ReserveResponse::of)
+			.toList();
 	}
 }
