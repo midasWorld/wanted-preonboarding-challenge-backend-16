@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.wanted.preonboarding.ticket.application.event.ReservationCancelledEvent;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationEventHandler {
 	private final ReservationCancelNoticeRepository reservationCancelNoticeRepository;
 
+	@Async
 	@EventListener
 	public void onReservationCancelled(ReservationCancelledEvent event) {
 
