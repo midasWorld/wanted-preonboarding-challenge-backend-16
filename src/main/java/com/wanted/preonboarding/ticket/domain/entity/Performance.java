@@ -45,21 +45,21 @@ public class Performance {
 	@Column(nullable = false)
 	private PerformanceType type;
 
-	@Column(nullable = false)
-	private Date start_date;
+	@Column(name = "start_date", nullable = false)
+	private Date startDate;
 
 	@Convert(converter = ReserveStatusConverter.class)
 	@Column(nullable = false, name = "is_reserve", columnDefinition = "varchar default 'disable'")
 	private ReserveState isReserve;
 
 	@Builder
-	public Performance(UUID id, String name, int price, int round, PerformanceType type, Date start_date, ReserveState isReserve) {
+	public Performance(UUID id, String name, int price, int round, PerformanceType type, Date startDate, ReserveState isReserve) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.round = round;
 		this.type = type;
-		this.start_date = start_date;
+		this.startDate = startDate;
 		this.isReserve = isReserve;
 	}
 }
