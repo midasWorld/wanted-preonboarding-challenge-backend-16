@@ -7,10 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wanted.preonboarding.ticket.application.request.FindReservationRequest;
 import com.wanted.preonboarding.ticket.application.request.ReserveRequest;
+import com.wanted.preonboarding.ticket.application.response.PerformanceResponse;
 import com.wanted.preonboarding.ticket.application.response.ReserveResponse;
-import com.wanted.preonboarding.ticket.domain.dto.PerformanceInfo;
 import com.wanted.preonboarding.ticket.domain.entity.Performance;
 import com.wanted.preonboarding.ticket.domain.entity.Reservation;
+import com.wanted.preonboarding.ticket.domain.enums.ReserveState;
 import com.wanted.preonboarding.ticket.infrastructure.repository.PerformanceRepository;
 import com.wanted.preonboarding.ticket.infrastructure.repository.ReservationRepository;
 
@@ -24,15 +25,10 @@ public class TicketSeller {
 	private final ReservationRepository reservationRepository;
 	private long totalAmount = 0L;
 
-	public List<PerformanceInfo> getAllPerformanceInfoList() {
-		return performanceRepository.findByIsReserve("enable")
-			.stream()
-			.map(PerformanceInfo::of)
+	public List<PerformanceResponse> getAllPerformances() {
+		return performanceRepository.findAllByIsReserve(ReserveState.ENABLE)
+			.stream().map(PerformanceResponse::of)
 			.toList();
-	}
-
-	public PerformanceInfo getPerformanceInfoDetail(String name) {
-		return PerformanceInfo.of(performanceRepository.findByName(name));
 	}
 
 	@Transactional
@@ -40,8 +36,7 @@ public class TicketSeller {
 		Performance performance = performanceRepository.findById(request.getPerformanceId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 공연은 존재하지 않습니다. id= " + request.getPerformanceId()));
 
-		String enableReserve = performance.getIsReserve();
-		if (!enableReserve.equalsIgnoreCase("enable")) {
+		if (performance.getIsReserve() == ReserveState.ENABLE) {
 			throw new IllegalArgumentException("해당 공연은 예매가 불가능합니다.");
 		}
 

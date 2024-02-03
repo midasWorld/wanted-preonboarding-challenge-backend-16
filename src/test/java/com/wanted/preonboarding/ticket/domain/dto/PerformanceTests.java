@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.wanted.preonboarding.ticket.domain.enums.PerformanceType;
+
 @SpringBootTest
 public class PerformanceTests {
 

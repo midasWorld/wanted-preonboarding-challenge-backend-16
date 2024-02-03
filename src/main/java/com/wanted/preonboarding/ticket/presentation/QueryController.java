@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wanted.preonboarding.core.domain.response.ResponseHandler;
 import com.wanted.preonboarding.ticket.application.TicketSeller;
 import com.wanted.preonboarding.ticket.application.request.FindReservationRequest;
+import com.wanted.preonboarding.ticket.application.response.PerformanceResponse;
 import com.wanted.preonboarding.ticket.application.response.ReserveResponse;
-import com.wanted.preonboarding.ticket.domain.dto.PerformanceInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,13 +23,13 @@ import lombok.RequiredArgsConstructor;
 public class QueryController {
 	private final TicketSeller ticketSeller;
 
-	@GetMapping("/all/performance")
-	public ResponseEntity<ResponseHandler<List<PerformanceInfo>>> getAllPerformanceInfoList() {
+	@GetMapping("/performances")
+	public ResponseEntity<ResponseHandler<List<PerformanceResponse>>> getAllPerformances() {
 		return ResponseEntity.ok()
-			.body(ResponseHandler.<List<PerformanceInfo>>builder()
+			.body(ResponseHandler.<List<PerformanceResponse>>builder()
 				.message("Success")
 				.statusCode(HttpStatus.OK)
-				.data(ticketSeller.getAllPerformanceInfoList())
+				.data(ticketSeller.getAllPerformances())
 				.build()
 			);
 	}

@@ -5,7 +5,13 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.wanted.preonboarding.ticket.domain.enums.PerformanceType;
+import com.wanted.preonboarding.ticket.domain.enums.PerformanceTypeConverter;
+import com.wanted.preonboarding.ticket.domain.enums.ReserveState;
+import com.wanted.preonboarding.ticket.domain.enums.ReserveStatusConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,21 +31,29 @@ public class Performance {
 	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(columnDefinition = "BINARY(16)")
 	private UUID id;
+
 	@Column(nullable = false)
 	private String name;
+
 	@Column(nullable = false)
 	private int price;
+
 	@Column(nullable = false)
 	private int round;
+
+	@Convert(converter = PerformanceTypeConverter.class)
 	@Column(nullable = false)
-	private int type;
+	private PerformanceType type;
+
 	@Column(nullable = false)
 	private Date start_date;
+
+	@Convert(converter = ReserveStatusConverter.class)
 	@Column(nullable = false, name = "is_reserve", columnDefinition = "varchar default 'disable'")
-	private String isReserve;
+	private ReserveState isReserve;
 
 	@Builder
-	public Performance(UUID id, String name, int price, int round, int type, Date start_date, String isReserve) {
+	public Performance(UUID id, String name, int price, int round, PerformanceType type, Date start_date, ReserveState isReserve) {
 		this.id = id;
 		this.name = name;
 		this.price = price;

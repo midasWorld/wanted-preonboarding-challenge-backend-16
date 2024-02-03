@@ -6,9 +6,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.wanted.preonboarding.ticket.domain.entity.Performance;
+import com.wanted.preonboarding.ticket.domain.enums.ReserveState;
 
 public interface PerformanceRepository extends JpaRepository<Performance, UUID> {
-	List<Performance> findByIsReserve(String isReserve);
-
-	Performance findByName(String name);
+	List<Performance> findAllByIsReserve(ReserveState isReserve);
 }
